@@ -3,7 +3,7 @@ package com.anderson.wallet_wise.domain.services.impl;
 import com.anderson.wallet_wise.domain.model.User;
 import com.anderson.wallet_wise.domain.services.IPasswordEncoderService;
 import com.anderson.wallet_wise.domain.services.IUserService;
-import com.anderson.wallet_wise.infra.repositories.UserRepository;
+import com.anderson.wallet_wise.infra.database.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

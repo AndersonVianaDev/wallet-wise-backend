@@ -2,7 +2,7 @@ package com.anderson.wallet_wise.infra.security;
 
 import com.anderson.wallet_wise.domain.model.User;
 import com.anderson.wallet_wise.infra.exceptions.NotFoundException;
-import com.anderson.wallet_wise.infra.repositories.UserRepository;
+import com.anderson.wallet_wise.infra.database.repositories.UserRepository;
 import com.anderson.wallet_wise.infra.security.token.ITokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -13,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.server.NotAcceptableStatusException;
 
 import java.io.IOException;
 import java.util.UUID;

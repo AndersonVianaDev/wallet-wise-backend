@@ -1,7 +1,7 @@
 package com.anderson.wallet_wise.infra.security;
 
 import com.anderson.wallet_wise.infra.exceptions.NotFoundException;
-import com.anderson.wallet_wise.infra.repositories.UserRepository;
+import com.anderson.wallet_wise.infra.database.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

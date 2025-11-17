@@ -1,4 +1,4 @@
-package com.anderson.wallet_wise.infra.repositories;
+package com.anderson.wallet_wise.infra.database.repositories;
 
 import com.anderson.wallet_wise.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
