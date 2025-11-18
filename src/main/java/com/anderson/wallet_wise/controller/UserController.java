@@ -7,10 +7,9 @@ import com.anderson.wallet_wise.domain.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -25,5 +24,21 @@ public class UserController {
         final UserResponseDTO response = UserResponseDTO.of(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable("id") UUID id) {
+        final User user = service.findById(id);
+        final UserResponseDTO response = UserResponseDTO.of(user);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<UserResponseDTO> findByEmail(@RequestParam("email") String email) {
+        final User user = service.findByEmail(email);
+        final UserResponseDTO response = UserResponseDTO.of(user);
+
+        return ResponseEntity.ok(response);
     }
 }
