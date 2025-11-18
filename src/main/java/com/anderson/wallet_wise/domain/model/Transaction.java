@@ -23,10 +23,12 @@ public class Transaction {
     private UUID id;
     private BigDecimal value;
     private LocalDateTime transactionDate;
+
     @ManyToOne
     private Category category;
     private String description;
-    @OneToMany
+
+    @ManyToOne(optional = false)
     private User owner;
 
 
