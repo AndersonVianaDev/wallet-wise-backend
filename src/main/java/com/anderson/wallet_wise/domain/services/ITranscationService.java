@@ -10,4 +10,5 @@ public interface ITranscationService {
     Transaction save(Transaction transaction);
     Transaction findByOwnerAndId(User owner, UUID id);
     List<Transaction> findAllByOwner(User owner);
+    List<Transaction> findAllByOwnerAndCategory(User owner, Long categoryId);
 }
