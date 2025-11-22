@@ -1,31 +1,27 @@
 package com.anderson.wallet_wise.domain.services.impl;
 
-import com.anderson.wallet_wise.domain.model.Budget;
 import com.anderson.wallet_wise.domain.model.Category;
 import com.anderson.wallet_wise.domain.model.Transaction;
 import com.anderson.wallet_wise.domain.model.User;
+import com.anderson.wallet_wise.domain.services.IBudgetService;
 import com.anderson.wallet_wise.domain.services.ICategoryService;
 import com.anderson.wallet_wise.domain.services.ITranscationService;
-import com.anderson.wallet_wise.infra.database.repositories.BudgetRepository;
 import com.anderson.wallet_wise.infra.database.repositories.TransactionRepository;
-import com.anderson.wallet_wise.infra.exceptions.BudgetExceededException;
 import com.anderson.wallet_wise.infra.exceptions.NotFoundException;
 import com.anderson.wallet_wise.infra.exceptions.ResourceAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements ITranscationService {
 
     private final TransactionRepository repository;
-    private final BudgetRepository budgetRepository;
+    private final IBudgetService budgetService;
     private final ICategoryService categoryService;
 
     @Override
@@ -48,18 +44,7 @@ public class TransactionServiceImpl implements ITranscationService {
         final Category category = categoryService.findByOwnerOrOwnerIsNullAndId(owner, categoryId);
         transaction.setCategory(category);
 
-        final Budget budget = budgetRepository.findByOwnerIdAndCategoryId(owner.getId(), categoryId)
-                .orElse(null);
-
-        if (nonNull(budget)) {
-            BigDecimal valueTotal = repository.sumByOwnerAndCategory(owner.getId(), categoryId);
-
-            valueTotal = valueTotal.add(transaction.getValue());
-
-            if (valueTotal.compareTo(budget.getLimitAmount()) > 0) {
-                throw new BudgetExceededException("Budget limit exceeded");
-            }
-        }
+        budgetService.validateTransactionRespectsBudget(owner.getId(), categoryId, transaction.getValue());
 
         return repository.save(transaction);
     }
