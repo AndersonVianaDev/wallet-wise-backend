@@ -38,4 +38,13 @@ public class BudgetController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping
+    public ResponseEntity<BudgetResponseDTO> findByOwnerAndCategory(@AuthenticationPrincipal User user,
+                                                                    @RequestParam("categoryId") Long categoryId) {
+        final Budget budget = service.findByOwnerAndCategory(user, categoryId);
+        final BudgetResponseDTO response = BudgetResponseDTO.of(budget);
+
+        return ResponseEntity.ok(response);
+    }
 }
